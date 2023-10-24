@@ -1,33 +1,82 @@
 class Chronometer {
   constructor() {
-    // ... your code goes here
+    this.currentTime = 0;
+    this.intervalId = null;
   }
 
   start(printTimeCallback) {
-    // ... your code goes here
+    if (!this.intervalId) {
+      let secondsElapsed = 0;
+      this.intervalId = setInterval(()=> {
+        this.currentTime++;
+        secondsElapsed++;
+        if (printTimeCallback){
+          printTimeCallback();
+        }
+        if(secondsElapsed === 3) {
+          this.currentTime = 3;
+          clearInterval(this.intervalId);
+          this.intervalId = null;
+        }
+      }, 1000);
+    }
+    const myChronometer = new Chronometer();
+    myChronometer.start(()=>{
+      console.log('Current Time: ${myChronometer.currentTime}');
+    });
   }
+  
+  
+  
 
   getMinutes() {
-    // ... your code goes here
+    return Math.floor(this.currentTime / 60);
+  
+    
+const myChronometer = new Chronometer();
+myChronometer.currentTime = 135; //randome time of 2 minutes and 15 sec.
+
+const minutes = myChronometer.getMinutes();
+console.log('Minutes: ${minutes}');
   }
 
+
+
+
+
   getSeconds() {
-    // ... your code goes here
+  return this.currentTime % 60;
   }
 
   computeTwoDigitNumber(value) {
-    // ... your code goes here
+    // Serchinged online how to value (number) and return it as a string with two digits broth me this .padStart method.
+    return String(value).padStart(2,'0');
+    
+    const myChronometer = new Chronometer();
+    myChronometer.currentTime = 75; ////randome time of 1 minute and 15 sec.
+  
+  const seconds = myChronometer.getSeconds();
+  console.log('Seconds: ${seconds}');
   }
+ 
+
 
   stop() {
-    // ... your code goes here
-  }
+   if (this.intervalId) {
+    clearInterval(this.intervalId)
+    this.intervalId = null;
+   }
+   }
+  
 
   reset() {
-    // ... your code goes here
+    this.currentTime = 0;
   }
+    
+
 
   split() {
-    // ... your code goes here
-  }
-}
+const minutes = this.computeTwoDigitNumber(this.getMinutes());
+const seonds = this.computeTwoDigitNumber(this.getSeconds());
+return '${minutes}:${seconds}'
+  }}
